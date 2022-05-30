@@ -4,7 +4,7 @@ import { Inertia } from '@inertiajs/inertia';
 
 type personObject = { id: number, name: string, age: number, characteristics: any };
 
-const Test = ({message = "empty", people = []}) => {
+const Test = ({message = "empty", people = [], errors = ""}) => {
 
   const { data, setData, post, delete: destroy } = useForm({
     name: "",
@@ -39,6 +39,7 @@ const Test = ({message = "empty", people = []}) => {
         <label htmlFor="age">Age:</label>
         <input id="age" value={data.age} onChange={handleChange} style={{backgroundColor: "gray"}} />
         <button style={{backgroundColor: "gray"}} type="submit">Submit</button>
+        {errors && <div>{errors}</div>}
       </form>
       <h1 style={{color: "cyan"}}>List of people</h1>
       {people.map((person: personObject, i) =>
