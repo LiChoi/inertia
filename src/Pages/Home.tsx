@@ -1,4 +1,5 @@
 import React from 'react';
+// import GlobalLayout from '../Layouts/GlobalLayout';
 
 function Home({ message = 'empty', message2 = 'empty' }: any) {
   return (
@@ -11,5 +12,7 @@ function Home({ message = 'empty', message2 = 'empty' }: any) {
     </div>
   );
 }
+
+// Home.layout = (page:any) => <GlobalLayout title="Home">{page}</GlobalLayout>;
 
 export default Home;

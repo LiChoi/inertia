@@ -20,7 +20,7 @@ function Test({ message = 'empty', people = [], errors = '' }: any) {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    post('/test', inertiaAPIOptions);
+    post('/test', { ...inertiaAPIOptions, preserveState: false });
   };
 
   const handleDelete = (id: number) => destroy(`/test/${id}`, inertiaAPIOptions);
