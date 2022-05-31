@@ -2,9 +2,9 @@ import React from 'react';
 import { useForm } from '@inertiajs/inertia-react';
 import { Inertia } from '@inertiajs/inertia';
 
-type personObject = { id: number, name: string, age: number, characteristics: any };
+type PersonObject = { id: number, name: string, age: number, characteristics: any };
 
-function Test({ message = 'empty', people = [], errors = '' }) {
+function Test({ message = 'empty', people = [], errors = '' }: any) {
   const {
     data, setData, post, delete: destroy,
   } = useForm({
@@ -35,27 +35,31 @@ function Test({ message = 'empty', people = [], errors = '' }) {
       </h1>
       <h1 style={{ color: 'cyan' }}>Create People</h1>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="name">Name:</label>
-        <input id="name" value={data.name} onChange={handleChange} style={{ backgroundColor: 'gray' }} />
-        <label htmlFor="age">Age:</label>
-        <input id="age" value={data.age} onChange={handleChange} style={{ backgroundColor: 'gray' }} />
+        <label htmlFor="name">
+          Name:&nbsp;
+          <input id="name" value={data.name} onChange={handleChange} style={{ backgroundColor: 'gray' }} />
+        </label>
+        <label htmlFor="age">
+          Age:&nbps;
+          <input id="age" value={data.age} onChange={handleChange} style={{ backgroundColor: 'gray' }} />
+        </label>
         <button style={{ backgroundColor: 'gray' }} type="submit">Submit</button>
         {errors && <div>{errors}</div>}
       </form>
       <h1 style={{ color: 'cyan' }}>List of people</h1>
-      {people.map((person: personObject, i) => (
-        <div key={i}>
+      {people.map((person: PersonObject) => (
+        <div key={`person-${person.id}`}>
           <p>
             Name:
             {person.name}
             ; age:
             {person.age}
           </p>
-          <button style={{ backgroundColor: 'gray' }} onClick={() => handleDelete(person.id)}>
+          <button type="button" style={{ backgroundColor: 'gray' }} onClick={() => handleDelete(person.id)}>
             Delete
             {person.name}
           </button>
-          <button style={{ backgroundColor: 'gray' }} onClick={() => handleAddAge({ id: person.id, age: person.age + 1 })}>
+          <button type="button" style={{ backgroundColor: 'gray' }} onClick={() => handleAddAge({ id: person.id, age: person.age + 1 })}>
             Add Age to
             {person.name}
           </button>

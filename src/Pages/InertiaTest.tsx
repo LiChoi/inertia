@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Inertia } from '@inertiajs/inertia';
 
-type personObject = { id: number, name: string, age: number, characteristics: any };
+type PersonObject = { id: number, name: string, age: number, characteristics: any };
 
-function InertiaTest({ message = 'empty', people = [] }) {
+function InertiaTest({ message = 'empty', people = [] }: any) {
   const [values, setValues] = useState({
     name: '',
     age: 0,
@@ -35,26 +35,30 @@ function InertiaTest({ message = 'empty', people = [] }) {
       </h1>
       <h1 style={{ color: 'cyan' }}>Create People</h1>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="name">Name:</label>
-        <input id="name" value={values.name} onChange={handleChange} style={{ backgroundColor: 'gray' }} />
-        <label htmlFor="age">Age:</label>
-        <input id="age" value={values.age} onChange={handleChange} style={{ backgroundColor: 'gray' }} />
+        <label htmlFor="name">
+          Name:&nbsp;
+          <input id="name" value={values.name} onChange={handleChange} style={{ backgroundColor: 'gray' }} />
+        </label>
+        <label htmlFor="age">
+          Age:&nbsp;
+          <input id="age" value={values.age} onChange={handleChange} style={{ backgroundColor: 'gray' }} />
+        </label>
         <button style={{ backgroundColor: 'gray' }} type="submit">Submit</button>
       </form>
       <h1 style={{ color: 'cyan' }}>List of people</h1>
-      {people.map((person: personObject, i) => (
-        <div key={i}>
+      {people.map((person: PersonObject) => (
+        <div key={`person-${person.id}`}>
           <p>
             Name:
             {person.name}
             ; age:
             {person.age}
           </p>
-          <button style={{ backgroundColor: 'gray' }} onClick={() => handleDelete(person.id)}>
+          <button type="button" style={{ backgroundColor: 'gray' }} onClick={() => handleDelete(person.id)}>
             Delete
             {person.name}
           </button>
-          <button style={{ backgroundColor: 'gray' }} onClick={() => handleAddAge({ id: person.id, age: person.age + 1 })}>
+          <button type="button" style={{ backgroundColor: 'gray' }} onClick={() => handleAddAge({ id: person.id, age: person.age + 1 })}>
             Add Age to
             {person.name}
           </button>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Home({ message = 'empty', message2 = 'empty' }) {
+function Home({ message = 'empty', message2 = 'empty' }: any) {
   return (
     <div>
       <h1 style={{ color: 'cyan' }}>Home</h1>
