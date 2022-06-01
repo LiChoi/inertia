@@ -1,5 +1,5 @@
 import React from 'react';
-// import GlobalLayout from '../Layouts/GlobalLayout';
+import LocalLayout from '../Layouts/LocalLayout';
 
 function Home({ message = 'empty', message2 = 'empty' }: any) {
   return (
@@ -13,6 +13,6 @@ function Home({ message = 'empty', message2 = 'empty' }: any) {
   );
 }
 
-// Home.layout = (page:any) => <GlobalLayout title="Home">{page}</GlobalLayout>;
+Home.layout = (page:any) => <LocalLayout title="Home">{page}</LocalLayout>;
 
 export default Home;

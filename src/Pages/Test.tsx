@@ -6,10 +6,10 @@ type PersonObject = { id: number, name: string, age: number, characteristics: an
 
 function Test({ message = 'empty', people = [], errors = '' }: any) {
   const {
-    data, setData, post, delete: destroy,
+    data, setData, post, delete: destroy, reset, processing,
   } = useForm({
     name: '',
-    age: 0,
+    age: '0',
   });
 
   const handleChange = (e: any) => setData(e.target.id, e.target.value);
@@ -20,7 +20,12 @@ function Test({ message = 'empty', people = [], errors = '' }: any) {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    post('/test', { ...inertiaAPIOptions, preserveState: false });
+    post('/test', {
+      ...inertiaAPIOptions,
+      onSuccess: () => {
+        reset();
+      },
+    });
   };
 
   const handleDelete = (id: number) => destroy(`/test/${id}`, inertiaAPIOptions);
@@ -40,11 +45,12 @@ function Test({ message = 'empty', people = [], errors = '' }: any) {
           <input id="name" value={data.name} onChange={handleChange} style={{ backgroundColor: 'gray' }} />
         </label>
         <label htmlFor="age">
-          Age:&nbps;
+          Age:&nbsp;
           <input id="age" value={data.age} onChange={handleChange} style={{ backgroundColor: 'gray' }} />
         </label>
         <button style={{ backgroundColor: 'gray' }} type="submit">Submit</button>
         {errors && <div>{errors}</div>}
+        {processing && <div>PROCESSING!!!!!</div>}
       </form>
       <h1 style={{ color: 'cyan' }}>List of people</h1>
       {people.map((person: PersonObject) => (

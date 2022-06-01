@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Inertia } from '@inertiajs/inertia';
+import LocalLayout from '../Layouts/LocalLayout';
 
 type PersonObject = { id: number, name: string, age: number, characteristics: any };
 
@@ -67,5 +68,7 @@ function InertiaTest({ message = 'empty', people = [] }: any) {
     </div>
   );
 }
+
+InertiaTest.layout = (page:any) => <LocalLayout title="Home">{page}</LocalLayout>;
 
 export default InertiaTest;
