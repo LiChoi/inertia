@@ -1,40 +1,36 @@
-import React from 'react';
-import { useForm } from '@inertiajs/inertia-react';
+import React, { useState } from 'react';
 import { Inertia } from '@inertiajs/inertia';
+import LocalLayout from '../Layouts/LocalLayout';
 
 type PersonObject = { id: number, name: string, age: number, characteristics: any };
 
-function Test({ message = 'empty', people = [], errors = '' }: any) {
-  const {
-    data, setData, post, delete: destroy, reset, processing,
-  } = useForm({
+function InertiaTest({ message = 'empty', people = [] }: any) {
+  const [values, setValues] = useState({
     name: '',
-    age: '0',
+    age: 0,
   });
 
-  const handleChange = (e: any) => setData(e.target.id, e.target.value);
-
-  const inertiaAPIOptions = {
-    preserveScroll: true,
+  const handleChange = (e: any) => {
+    const key = e.target.id;
+    const { value } = e.target;
+    setValues({
+      ...values,
+      [key]: value,
+    });
   };
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    post('/test', {
-      ...inertiaAPIOptions,
-      onSuccess: () => {
-        reset();
-      },
-    });
+    Inertia.post('/inertia', values);
   };
 
-  const handleDelete = (id: number) => destroy(`/test/${id}`, inertiaAPIOptions);
+  const handleDelete = (id: number) => Inertia.delete(`/inertia/${id}`);
 
-  const handleAddAge = (update: { id: number, age: number }) => Inertia.patch('/test', update, inertiaAPIOptions);
+  const handleAddAge = (update: { id: number, age: number }) => Inertia.patch('/inertia', update);
 
   return (
     <div style={{ color: 'cyan' }}>
-      <h1 style={{ color: 'cyan' }}>TEST</h1>
+      <h1 style={{ color: 'cyan' }}>Inertia Demo</h1>
       <h1 style={{ color: 'cyan' }}>
         {message}
       </h1>
@@ -42,15 +38,13 @@ function Test({ message = 'empty', people = [], errors = '' }: any) {
       <form onSubmit={handleSubmit}>
         <label htmlFor="name">
           Name:&nbsp;
-          <input id="name" value={data.name} onChange={handleChange} style={{ backgroundColor: 'gray' }} />
+          <input id="name" value={values.name} onChange={handleChange} style={{ backgroundColor: 'gray' }} />
         </label>
         <label htmlFor="age">
           Age:&nbsp;
-          <input id="age" value={data.age} onChange={handleChange} style={{ backgroundColor: 'gray' }} />
+          <input id="age" value={values.age} onChange={handleChange} style={{ backgroundColor: 'gray' }} />
         </label>
         <button style={{ backgroundColor: 'gray' }} type="submit">Submit</button>
-        {errors && <div>{errors}</div>}
-        {processing && <div>PROCESSING!!!!!</div>}
       </form>
       <h1 style={{ color: 'cyan' }}>List of people</h1>
       {people.map((person: PersonObject) => (
@@ -75,4 +69,6 @@ function Test({ message = 'empty', people = [], errors = '' }: any) {
   );
 }
 
-export default Test;
+InertiaTest.layout = (page:any) => <LocalLayout title="Home">{page}</LocalLayout>;
+
+export default InertiaTest;
