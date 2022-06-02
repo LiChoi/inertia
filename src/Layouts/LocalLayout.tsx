@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { usePage } from '@inertiajs/inertia-react';
 
 export default function LocalLayout({ children }:any) {
-  const { sharedData = '' }:any = usePage().props;
+  const { sharedData = '', firstPerson }:any = usePage().props;
   const [count, setCount] = useState(0);
 
   return (
@@ -11,7 +11,11 @@ export default function LocalLayout({ children }:any) {
         <span>Local Layout</span>
         <span style={{ margin: '10px' }}>{`Counter: ${count}`}</span>
         <button type="button" onClick={() => setCount(count + 1)} style={{ margin: '10px', backgroundColor: 'gray' }}>Increment Count</button>
-        <span>{sharedData}</span>
+        <span>
+          {sharedData}
+          &nbsp;
+        </span>
+        <span>{`First person: ${firstPerson.name}, ${firstPerson.age}`}</span>
       </header>
       <div>{children}</div>
     </main>
